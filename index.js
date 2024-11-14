@@ -6,11 +6,10 @@ var inputs = readline().split(' ');
 const width = parseInt(inputs[0]); // columns in the game grid
 const height = parseInt(inputs[1]); // rows in the game grid
  
-function chooseTargetProteinSide(source, targets) { // targets 0 yakın olan 1 2. yakın olan
+function chooseTargetProteinSide(source, targets) { // targets[0] -> yakın nokta, targets[1] -> bir sonraki yakın nokta
     let closest = targets[0];
     let sideOfSource = whichSideOfTheTarget(source, targets[0]);
     let chosenSideOfTarget;
- 
     if (sideOfSource[0] == 0) {
         chosenSideOfTarget = {
             x: closest.x,
@@ -18,7 +17,6 @@ function chooseTargetProteinSide(source, targets) { // targets 0 yakın olan 1 2
         }
         return chosenSideOfTarget;
     }
- 
     if (sideOfSource[1] == 0) {
         chosenSideOfTarget = {
             x: closest.x + sideOfSource[0],
@@ -33,7 +31,7 @@ function chooseTargetProteinSide(source, targets) { // targets 0 yakın olan 1 2
         },
         {
             x: closest.x,
-            y: closes.y + sideOfSource[1]
+            y: closest.y + sideOfSource[1]
         }
     ]
     let firstDistance = distance(sidePositions[0], targets[1]);
@@ -43,8 +41,8 @@ function chooseTargetProteinSide(source, targets) { // targets 0 yakın olan 1 2
     } else {
         return sidePositions[1];
     }
-   
 }
+
 function whichSideOfTheTarget(source, target) {
     let position = [-1,-1];
     if (source.x > target.x) {
