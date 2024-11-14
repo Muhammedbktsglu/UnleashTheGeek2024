@@ -1,0 +1,26 @@
+*İlk hedef*
+- Oyun başladığında proteinA'nın sağındaki, solundaki ve bulunduğu (x,y) konumunu, allyRoots'a göre mesafe ölçümünü yap. Distance fonksiyonunu kullan
+--- Disance fonksiyonu 5'den küçük dönüyorsa proteinA'ya doğru BASIC ile git. Giderken önünde type=wall var ise etrafından dolan. Distance fonksiyonunun sonucu 2 birim olana kadar ilerle. Ardından HARVESTER yerleştir. Harvester'ın direction'ı proteinA'nın olduğu (x,y) koordinatına bakması lazım.
+--- Eğer ki distance fonksiyonu 5'den büyük dönyüorsa proteinA'ya ulaşabilmeyi sağlamak için SPORER üret. SPORE yönlendirmesiyle beraber A'ya yakın olacak şekilde, bulunduğun doğrultuda tükürme işlemini yap. Yani oraya root oluştur. A'ya yakın bir yere SPORE tükürmesini yaptırırken dikkat edilmesi gereken: göndermek istediğin yerin x'i ile kendi x'in veyahut göndermek istediğin y'si ile kendi y'nin koordinatı eşit olması lazım. Arada type'ı wall olan bir şey bulunmaması gerekiyor. Eğer düz doğrultudayken arada wall var ise, proteinA'nın sağını veya solunu hedef alabilirsin. Hedefi kaydırıyorsan yine önünde wall olacak mı dikkat etmen gerekiyor.
+
+*İkinci hedef*
+- Oyunun içerisinde allyRoots kaç tane var kontrol et. Eğerki allyRoots.length<2 ise; SPORER koy. SPOR aksiyonunu olabilecek en uzak yönde fırlattır. En uzağa fırlattırmak için öncelikle: N/E/W/S yönlerinde önünde bir engel (type=WALL, allyRoots, BASIC, TENTACLE, HARVESTER, SPORER, A, B, C, D) var mı diye kontrol et. Yani boş olan yönde uzak bir noktaya fırlatma yapmak önemli.
+- allyRoots.length>=2 ise yeni bir proteinA'yı hedefle. Önceden bulunan ve harvest edilene gitmemek önemli. İkinci proteinA'ya 2 birim kala dur. HARVESTER'i koy. Harvester'i koyarken, proteinA yönünde bakmasına dikkat et.
+
+A'yı harvest ettirebilecek bir fonksiyon yazılabilir.
+
+*Üçüncü hedef*
+- B,C,D proteinlerinin en az birer tane HARVESTER tarafından toplanıyor olması önemli. Halihazırda en az 2 tane root'a sahibiz. Yani requiredActionsCount'ımız => 2 //(let i = 0; i < requiredActionsCount; i++)
+2 rootun da HARVESTER etmek üzerine proteinlere 2 birim kalana kadar ilerlemesi gerekiyor.
+
+*Dördüncü hedef*
+Eğerki ekonomi sağlamlaştıysa; yani B,C,D harvesting'i yapan birer HARVESTER kurulduysa ve 3 tane proteinA'yı harvestlayan HARVESTER kurulduysa;
+yeni bir root çıkartmak için SPORER koy ve olabilecek en uzak noktaya SPOR fonksiyonunu çalıştır.
+
+*Beşinci hedef*
+Yukarıdaki tüm şartlar sağlandıktan sonra
+- Eğerki B, C (TENTACLE malzemesi hangisi ise onlar kullanılmalı, oyunun kurallını kontrol et) malzemesi 5'er taneyse veya 2'şer tane Tentacle malzemesi toplayan harvester varsa:
+rastgele yayılmayı  TENTACLE ile yap. Gideceğin koordinat rakibin en yakın rootunun (x,y)'si olmalı. 
+- Eğerki 5'er tane tentacle malzemesi yoksa veya 2'şer tane harvester kaynağın yoksa, rakibin en yakın (BASIC, TENTACLE, HARVESTER, SPORER)'ını hedef al ve 2 birim kalana kadar ona ilerle. Ardından Tentacle koy ve rakibe doğru baksın.
+--- Eğerki halihazırda rakibe 2 birim uzaklıkta hücren varsa Tentacle koy ve direction'ı rakibe doğru olsun.
+----- Eğerki 2 birimden yakındaysa, rastgele BASIC ile boşluk doldurma hareketi yap.
